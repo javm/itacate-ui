@@ -24,17 +24,20 @@ class App extends Component {
 
   addService = event => {
     let service = this.state.newService;
-    alert('A service was submitted: ' + this.state.newService);
+    let providerEmail = event.target.providerEmail.value;
+    let consumerEmail = event.target.consumerEmail.value;
+
+    alert('A service was submitted: ' + this.state.newService + ' '+ providerEmail);
     let mutation = `mutation {
       serviceCreateOne (record: {name: "${service}",
       provider: {
         name: "Jose",
-        email: "jose@gmail.com",
+        email: "${providerEmail}",
         userType: provider
       },
       consumer: {
         name: "Carlos",
-        email: "carlos@gmail.com",
+        email: "${consumerEmail}",
         userType: consumer
       }
     }
@@ -61,6 +64,9 @@ axiosGraphQL.post('', {query: mutation}).then(result => {
        <h1>{TITLE}</h1>
 
        <form onSubmit={this.onSubmit}>
+       <table size="100%">
+       <tr>
+       <td>
          <label htmlFor="url">
            Add new service
          </label>
@@ -70,6 +76,31 @@ axiosGraphQL.post('', {query: mutation}).then(result => {
            style={{ width: '300px' }}
            onChange={this.onChange}
          />
+         </td>
+         </tr>
+         <tr>
+         <td>
+         <label>
+         Provider email
+         </label>
+         <input
+         id="email"
+         type="email"
+         name="providerEmail"
+         />
+         </td>
+         </tr>
+         <tr>
+         <td>
+         <label>Consumenr email</label>
+         <input
+         id="email"
+         type="email"
+         name="consumerEmail"
+         />
+         </td>
+         </tr>
+         </table>
          <button type="submit">Add</button>
        </form>
        <hr />
